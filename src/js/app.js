@@ -97,6 +97,26 @@ function initApp() {
     });
   });
 
+  // ========== 帮助菜单（键盘快捷键） ==========
+  const helpBtn = document.querySelector('.topbar-menu button:nth-child(3)');
+  if (helpBtn) {
+    helpBtn.addEventListener('click', () => {
+      const shortcuts = [
+        ['Space', '播放 / 暂停'],
+        ['← →', '逐帧移动'],
+        ['S', '在播放头分割片段'],
+        ['Delete', '删除选中片段'],
+        ['Ctrl+Z', '撤销'],
+        ['Ctrl+Y / Ctrl+Shift+Z', '重做'],
+        ['Ctrl+S', '保存项目'],
+        ['滚轮/拖动', '时间轴缩放/擦洗']
+      ];
+      const msg = '⌨ 键盘快捷键\n\n' +
+        shortcuts.map(([key, desc]) => `  ${key.padEnd(20)}  ${desc}`).join('\n');
+      alert(msg);
+    });
+  }
+
   setStatus('就绪 — 点击"导入"开始，或拖拽素材到时间轴');
   console.log('智能剪辑 初始化完成');
   console.log('运行环境:', window.isNW ? 'NW.js' : '浏览器(预览模式)');
