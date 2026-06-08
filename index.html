@@ -170,6 +170,17 @@
   <script>
     window.isNW = (typeof process !== 'undefined' && process.versions && process.versions.nw);
   </script>
+  <!-- 模块脚本（按依赖顺序加载） -->
+  <script src="src/js/utils.js"></script>
+  <script src="src/js/event-bus.js"></script>
+  <script src="src/js/project.js"></script>
+  <script src="src/js/undo-manager.js"></script>
+  <script src="src/js/player.js"></script>
+  <script src="src/js/timeline.js"></script>
+  <script src="src/js/importer.js"></script>
+  <script src="src/js/exporter.js"></script>
+  <script src="src/js/project-manager.js"></script>
+  <script src="src/js/ui-renderers.js"></script>
   <script src="src/js/app.js"></script>
 </body>
 </html>
