@@ -1,0 +1,36 @@
+node_modules/
+dist/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
+
+# 项目文件
+*.scproj
+
+# FFmpeg 临时文件
+smartclip_concat_*.txt
+
+# 导出视频
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# 截图 / 测试文件
+after-click.png
+app-test-*.png
+our-app-test.png
+
+# Playwright MCP
+.playwright-mcp/
+
+# NW.js 缓存
+nwjs*
+
+# OS 文件
+Desktop.ini
+ehthumbs.db
+
+# Claude
+.claude/

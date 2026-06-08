@@ -1,0 +1,22 @@
+{
+  "name": "smart-clip",
+  "version": "1.0.0",
+  "description": "智能剪辑桌面应用",
+  "main": "index.html",
+  "window": {
+    "title": "智能剪辑",
+    "width": 1400,
+    "height": 900,
+    "min_width": 1024,
+    "min_height": 600,
+    "icon": "src/assets/icon.png"
+  },
+  "chromium-args": "--enable-experimental-web-platform-features",
+  "scripts": {
+    "start": "nw .",
+    "dev": "nw . --remote-debugging-port=9222"
+  },
+  "devDependencies": {
+    "nw": "^0.95.0-sdk"
+  }
+}

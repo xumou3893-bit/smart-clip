@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能剪辑</title>
+  <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+
+  <!-- ========== 顶部工具栏 ========== -->
+  <header id="topbar">
+    <span class="topbar-logo">✂ 智能剪辑</span>
+    <nav class="topbar-menu">
+      <button>文件</button>
+      <button>编辑</button>
+      <button>帮助</button>
+    </nav>
+    <div class="topbar-center">
+      <span class="project-name">未命名项目</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="btn-new" class="btn-icon" title="新建项目">✨</button>
+      <button id="btn-open" class="btn-icon" title="打开项目">📂</button>
+      <button id="btn-save" class="btn-icon" title="保存项目">💾</button>
+      <span class="topbar-sep"></span>
+      <button id="btn-undo" class="btn-icon" title="撤销 Ctrl+Z" style="opacity:1">↩</button>
+      <button id="btn-redo" class="btn-icon" title="重做 Ctrl+Y" style="opacity:1">↪</button>
+      <span class="topbar-sep"></span>
+      <button id="btn-export" class="btn-primary" title="导出视频">🎬 导出</button>
+    </div>
+  </header>
+
+  <!-- ========== 主体工作区 ========== -->
+  <main id="workspace">
+
+    <!-- 左侧：素材面板 -->
+    <aside id="left-panel">
+      <div class="left-tabs">
+        <button class="left-tab active" data-tab="media">媒体</button>
+        <button class="left-tab" data-tab="audio">音频</button>
+        <button class="left-tab" data-tab="text">文本</button>
+        <button class="left-tab" data-tab="effects">特效</button>
+        <button class="left-tab" data-tab="transitions">转场</button>
+        <button class="left-tab" data-tab="filters">滤镜</button>
+      </div>
+
+      <!-- 媒体标签内容 -->
+      <div class="left-panel-content active" id="tab-media">
+        <div class="panel-actions">
+          <button id="btn-import" class="btn-import">📁 导入素材</button>
+        </div>
+        <div id="media-list">
+          <p class="placeholder">点击"导入素材"添加<br>视频、音频、图片</p>
+        </div>
+      </div>
+
+      <!-- 其他标签占位 -->
+      <div class="left-panel-content" id="tab-audio">
+        <div class="panel-actions"><button class="btn-import">🎵 导入音频</button></div>
+        <div id="audio-list"><p class="placeholder">暂无音频素材</p></div>
+      </div>
+      <div class="left-panel-content" id="tab-text"><p class="placeholder">文本模板(开发中)</p></div>
+      <div class="left-panel-content" id="tab-effects"><p class="placeholder">特效(开发中)</p></div>
+      <div class="left-panel-content" id="tab-transitions"><p class="placeholder">转场(开发中)</p></div>
+      <div class="left-panel-content" id="tab-filters"><p class="placeholder">滤镜(开发中)</p></div>
+    </aside>
+
+    <!-- 中央：预览 + 时间轴 -->
+    <section id="center-panel">
+
+      <!-- 预览播放器 -->
+      <div id="preview-container">
+        <video id="preview-player"></video>
+        <img id="preview-image" alt="预览图片">
+        <div id="preview-placeholder">
+          <p>预览画面</p>
+        </div>
+        <button id="btn-fit-mode" class="preview-fit-btn" title="切换适应/填充">🔲</button>
+        <div id="player-controls">
+          <button id="btn-play" title="播放/暂停 (空格)">▶</button>
+          <span id="ctrl-current-time">00:00.00</span>
+          <div id="ctrl-progress-bar">
+            <div id="ctrl-progress-fill"></div>
+            <div id="ctrl-progress-thumb"></div>
+          </div>
+          <span id="ctrl-total-time">00:00.00</span>
+        </div>
+      </div>
+
+      <!-- 时间轴 -->
+      <div id="timeline-panel">
+        <!-- 时间轴工具栏 -->
+        <div class="timeline-toolbar">
+          <button class="btn-tt active" title="选择工具">🖱</button>
+          <button class="btn-tt" title="分割工具" id="btn-split-tool">✂</button>
+          <span class="tt-sep"></span>
+          <span class="tt-time" id="timeline-time-display">00:00.00</span>
+          <span class="tt-sep"></span>
+          <button class="btn-tt active" title="吸附">🧲</button>
+          <button class="btn-tt" title="撤销">↩</button>
+          <button class="btn-tt" title="重做">↪</button>
+          <div class="timeline-zoom">
+            <button id="btn-zoom-out" class="btn-tt" title="缩小">−</button>
+            <input type="range" id="zoom-slider" min="20" max="200" value="50" title="缩放">
+            <button id="btn-zoom-in" class="btn-tt" title="放大">+</button>
+            <span class="zoom-label" id="zoom-label">100%</span>
+          </div>
+        </div>
+
+        <!-- 时间标尺 -->
+        <div id="timeline-header">
+          <span class="time-label">00:00.00</span>
+          <div id="time-ruler"></div>
+        </div>
+
+        <!-- 轨道区域 -->
+        <div id="timeline-tracks-wrap">
+          <div class="track-labels">
+            <div class="track-label-item">
+              <span class="track-icon">🎬</span>
+              <span>视频轨</span>
+            </div>
+            <div class="track-label-item">
+              <span class="track-icon">🎵</span>
+              <span>音频轨</span>
+            </div>
+          </div>
+          <div id="timeline-tracks">
+            <!-- 轨道由 JS 动态生成 -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 右侧：属性面板 -->
+    <aside id="right-panel">
+      <div class="right-panel-header">
+        <h3>属性</h3>
+      </div>
+      <div id="panel-content">
+        <p class="placeholder">选择片段查看属性</p>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- 导出进度弹窗 -->
+  <div id="export-modal" style="display:none;">
+    <div class="export-modal-overlay"></div>
+    <div class="export-modal-content">
+      <h3>🎬 正在导出视频</h3>
+      <div id="export-progress-bar-wrap">
+        <div id="export-progress-fill"></div>
+      </div>
+      <p id="export-progress-text">准备中...</p>
+      <p id="export-time-estimate" style="font-size:11px;color:var(--text-muted);"></p>
+      <button id="btn-cancel-export">取消</button>
+    </div>
+  </div>
+
+  <!-- ========== 底部状态栏 ========== -->
+  <footer id="statusbar">
+    <span id="status-text">就绪</span>
+    <span id="status-info">项目: 未保存 | FPS: 30</span>
+  </footer>
+
+  <!-- NW.js 环境检测 -->
+  <script>
+    window.isNW = (typeof process !== 'undefined' && process.versions && process.versions.nw);
+  </script>
+  <script src="src/js/app.js"></script>
+</body>
+</html>
